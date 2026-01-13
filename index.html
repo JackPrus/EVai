@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>East View AI bot</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>East View AI bot</h1>
+    </header>
+
+    <main class="chat">
+      <div id="chat-log" class="chat-log" aria-live="polite"></div>
+
+      <form id="chat-form" class="chat-form">
+        <div class="input-row">
+          <label class="field">
+            <span class="label">x-api-key</span>
+            <input id="api-key-input" type="password" placeholder="Введите x-api-key" required />
+          </label>
+        </div>
+
+        <div class="input-row">
+          <label class="select-wrapper">
+            <span class="label">Источник</span>
+            <select id="book-select" aria-label="Выбор источника">
+              <option value="2">Brockhaus and Efron encyclopedic dictionary</option>
+              <option value="4490" selected>Dostoevskiy</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="input-row">
+          <label class="field">
+            <span class="label">Ваш запрос</span>
+            <textarea id="query-input" rows="3" placeholder="Введите запрос..." required></textarea>
+          </label>
+        </div>
+
+        <button type="submit" class="send-btn">Отправить</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
