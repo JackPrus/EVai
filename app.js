@@ -171,7 +171,7 @@
     queryInput.value = "";
     setFormDisabled(true);
 
-    const loading = appendMessage("бот", "Ждём ответ (может занять до 45 сек)...", "loading");
+    const loading = appendMessage("бот", "Подготовка ответа...", "loading");
 
     try {
       const result = await sendQuery(query, bookId, apiKey);
