@@ -126,10 +126,22 @@
     }, REQUEST_TIMEOUT_MS);
 
     if (!response.ok) {
-      throw new Error(`Ошибка запроса: ${response.status}`);
+      let extra = "";
+      try {
+        const text = await response.text();
+        if (text) extra = ` | Тело: ${text}`;
+      } catch (e) {
+        // ignore
+      }
+      throw new Error(`Ошибка запроса: ${response.status}${extra}`);
     }
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      throw new Error("Не удалось разобрать ответ JSON");
+    }
     const body = parseBody(data);
     if (!body?.answer) {
       throw new Error("Некорректный ответ от сервера");
@@ -164,9 +176,12 @@
     } catch (error) {
       loading.remove();
       const isAbort = error.name === "AbortError";
+      const isNetwork = error instanceof TypeError;
       const message = isAbort
         ? "Время ожидания ответа истекло. Попробуйте ещё раз."
-        : error.message || "Что-то пошло не так";
+        : isNetwork
+          ? "Не удалось отправить запрос (CORS/сеть). Проверьте, что страница открыта по http(s) и ключ верный."
+          : error.message || "Что-то пошло не так";
       appendMessage("ошибка", message, "error");
     }
     setFormDisabled(false);
