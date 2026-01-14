@@ -72,7 +72,8 @@
       if (String(selectedBookId) === "4490") {
         link.href = `https://dlib.eastview.com/browse/book/${volumeId}/udb/${selectedBookId}`;
       } else {
-        link.href = `https://beed.eastview.com/api/article/${articleId}`;
+        // Brockhaus (bookId=2): volume/{volumeId}/article/{articleId}
+        link.href = `https://beed.eastview.com/volume/${volumeId}/article/${articleId}`;
       }
 
       const item = document.createElement("li");
