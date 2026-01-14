@@ -87,7 +87,11 @@
   };
 
   const parseBody = (data) => {
-    const body = data?.body;
+    if (!data) return null;
+    // вариант, когда backend сразу возвращает answer/sources
+    if (data.answer) return data;
+
+    const body = data.body;
     if (!body) return null;
     if (typeof body === "string") {
       try {
@@ -144,7 +148,7 @@
     }
     const body = parseBody(data);
     if (!body?.answer) {
-      throw new Error("Некорректный ответ от сервера");
+      throw new Error("Некорректный ответ от сервера: нет поля answer");
     }
     return { answer: body.answer, sources: body.sources || [], bookId };
   };
